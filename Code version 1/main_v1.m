@@ -54,7 +54,7 @@ T = 80;         % number of time periods (years)
 r = 0.01;       % interest rate
 beta = 1/(1+r); % discount factor
 gamma = 1.5;    % coefficient of relative risk aversion
-initial_assets = 1;     % initial asset endowment
+startA = 1;     % initial asset endowment
 
 %% Grids
 % Here we choose the dimension and select methods to construct grids
@@ -72,8 +72,6 @@ asset_grid = NaN(T+1, num_pts_assetgrid);
 for ixt = 1:1:T+1
     asset_grid(ixt,:) = getGrid(MinAss(ixt), MaxAss(ixt), num_pts_assetgrid, grid_method);
 end
-
-
 
 
 
