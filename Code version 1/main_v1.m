@@ -24,11 +24,11 @@ close all; % closes any graphs
 %% DECLARE VARIABLES and MATRICES that will be 'GLOBAL' 
 % declare the variables and matrices that are needed from or for other files
 
-global beta gamma r r % our model parameters (note: you can write them spaced like this)
-global num_pts_assetgrid Agrid % assets grid and dimension
-global interpMethod % numerical interpolation method used
-global tol minCons % numerical constants
-global plotNumber % for plotting the result
+global beta gamma r T	 % our model parameters (note: you can write them spaced like this)
+global numPtsA Agrid	 % assets grid and dimension
+global interpMethod	 % numerical interpolation method used
+global tol minCons 	 % numerical constants
+global plotNumber	 % for plotting the result
 
 %% Numerical methods
 % Select solution, interpolation and integration methods. 
@@ -60,18 +60,86 @@ startA = 1;     % initial asset endowment
 % Here we choose the dimension and select methods to construct grids
 
 % grid for assets
-num_pts_assetgrid = 20; % number of points in the discretized asset grid
-grid_method = 'equalsteps'; % method to construct the grid: equalsteps, logsteps, 3logsteps, 5logsteps or 10logsteps
+numPtsA = 20;			 % number of points in the discretized asset grid
+gridMethod = 'equalsteps';	 % method to construct the grid: equalsteps, logsteps, 3logsteps, 5logsteps or 10logsteps
 
 %% Get asset grid
-% Here we fill the assets' grid for each period using 'grid_method'
+% Here we fill the assets' grid for each period using 'gridMethod'
 
-[ MinAss, MaxAss ] = get_min_and_max_ass(startA);
+[ MinAss, MaxAss ] = getMinAndMaxAss(startA);
 
-asset_grid = NaN(T+1, num_pts_assetgrid);
+Agrid = NaN(T+1, numPtsA);
 for ixt = 1:1:T+1
-    asset_grid(ixt,:) = getGrid(MinAss(ixt), MaxAss(ixt), num_pts_assetgrid, grid_method);
+    Agrid(ixt,:) = getGrid(MinAss(ixt), MaxAss(ixt), numPtsa, gridMethod);
 end
+
+%% Solve consumer's problem
+% Get policy function and value function in all periods and for all grid
+% points
+
+[ policy_A1, policy_C, val] = solveValueFunction;
+
+%% Simulate consumer's paths
+% start from the initial level of assets and simulate optimal consumption and savings profiles
+% over lifecyle
+
+[ cpath, apath, vpath ] = simNoUncer(policyA1, val, startA);
+
+
+%% ------------------------------------------------------------------------ 
+% PLOTS 
+% Plot paths of consumption and assets
+plotNumber = 0;
+plotApath(apath)
+plotCpath(cpath)
+%plotCZoomedOut(cpath)
+
+% Plot value function
+whichyear = 1;
+plotNode1 = 1;
+plotNodeLast = numPtsA;
+plotV;
+
+
+%% ------------------------------------------------------------------------ 
+% Compare numerical and analytical solutions
+% Get the analytical policy functions (in this case in the absence of uncertainty
+% and borrowing constraints
+[ policyA1_analytic, policyC_analytic ] = getPolicy_analytical;
+
+% Get the ratio of numerical policy function to analytic policy functions
+ratioOfPolicyC = policyC./policyC_analytic;
+ratioOfPolicyA = policyA1./policyA1_analytic;
+
+% Now plot value and policy functions
+whichyear = 1;
+plotNode1 = 3;
+plotNodeLast = numPtsA;
+plotNumericError;
+
+%% ------------------------------------------------------------------------ 
+% Stop the clock
+toc;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
