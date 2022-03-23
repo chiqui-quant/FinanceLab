@@ -2,7 +2,7 @@
 % (1) there is no uncertainty
 % (2) borrowing is allowed up to the natural borrowing constraint
 
-function [ policyA1. policyC ] = getPolicy_analytical
+function [ policyA1, policyC ] = getPolicy_analytical
 
 %% ------------------------------------------------------------------------ 
 % Global variables that we need to access

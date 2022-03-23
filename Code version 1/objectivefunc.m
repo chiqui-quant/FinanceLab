@@ -1,5 +1,6 @@
 % This function returns the quantity - (u(c) + b V(A1))
 % where c is calculated from today and tomorrow's assets
+function [value] = objectivefunc(A1, A0)
 
 %% ------------------------------------------------------------------------ 
 % Declare the global variables that we need to access

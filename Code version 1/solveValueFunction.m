@@ -7,7 +7,7 @@
 % which is a built-in optimizer in MatLab. It combines two methods: golden
 % section search and parabolic interpolation.
 
-function [ policy_A1, policy_C, V] = solveValueFunction
+function [ policyA1, policyC, V] = solveValueFunction
 
 %% ------------------------------------------------------------------------
 % Declare the variables we need

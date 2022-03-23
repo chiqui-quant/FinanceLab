@@ -70,14 +70,14 @@ gridMethod = 'equalsteps';	 % method to construct the grid: equalsteps, logsteps
 
 Agrid = NaN(T+1, numPtsA);
 for ixt = 1:1:T+1
-    Agrid(ixt,:) = getGrid(MinAss(ixt), MaxAss(ixt), numPtsa, gridMethod);
+    Agrid(ixt,:) = getGrid(MinAss(ixt), MaxAss(ixt), numPtsA, gridMethod);
 end
 
 %% Solve consumer's problem
 % Get policy function and value function in all periods and for all grid
 % points
 
-[ policy_A1, policy_C, val] = solveValueFunction;
+[ policyA1, policyC, val] = solveValueFunction;
 
 %% Simulate consumer's paths
 % start from the initial level of assets and simulate optimal consumption and savings profiles
@@ -96,7 +96,7 @@ plotCpath(cpath)
 
 % Plot value function
 whichyear = 1;
-plotNode1 = 1;
+plotNode1 = 3;
 plotNodeLast = numPtsA;
 plotV;
 
