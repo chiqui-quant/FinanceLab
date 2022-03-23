@@ -20,14 +20,14 @@ maxA = NaN(T+1,1);
 
 % Borrowing constraints
 BC(T+1) = 0;
-for ixt = t:-1:1
+for ixt = T:-1:1
     BC(ixt) = BC(ixt+1)/(1+r) +minCons;
 end
 
 % Maximum assets
 maxA(1) = startA;
-for ixt = 1:1:T+1
-    maxA(ixt) = (maxA(ixt -1) * (1+r));
+for ixt = 2:1:T+1
+    maxA(ixt) = (maxA(ixt -1)) * (1+r);
 end
 
 end
